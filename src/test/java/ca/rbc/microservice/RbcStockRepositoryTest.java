@@ -18,6 +18,7 @@ import reactor.core.publisher.Mono;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -29,12 +30,6 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 public class RbcStockRepositoryTest {
 
     private WebTestClient webTestClient;
-
-    @Mock
-    private RbcStocksRepository repo;
-
-    @Mock
-    private StockService service;
 
     @LocalServerPort
     private int port;
@@ -68,17 +63,14 @@ public class RbcStockRepositoryTest {
 
     @Test
     public void getRecordByStockIndex() {
-//        Mockito.when(repo.findByStock("AA"))
-//                .thenReturn(Arrays.asList(new StockRecord("4", "AA", "1/7/2021"),
-//                        new StockRecord("4", "AA", "1/7/2023"),
-//                        new StockRecord("4", "AA", "1/7/2019")));
 
         webTestClient.get()
                 .uri("api/records/AA")
                 .exchange()
                 .expectStatus()
                 .isOk()
-                .expectBodyList(StockRecord.class).consumeWith(response -> Assertions.assertThat(response.getResponseBody()).hasSize(10));
+                .expectBodyList(StockRecord.class);
+
     }
 
     @Test

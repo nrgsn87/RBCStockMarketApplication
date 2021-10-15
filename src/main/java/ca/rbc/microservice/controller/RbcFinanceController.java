@@ -8,11 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-
 @RestController
 @RequestMapping("/api")
 public class RbcFinanceController {
@@ -28,6 +23,7 @@ public class RbcFinanceController {
         public Flux<StockRecord> getRecordsByStock(@PathVariable("stock") String stock)   {
         return service.getRecordsByStockIndex(stock);
     }
+
 
     @PostMapping("/record")
     Mono<StockRecord> addStockRecord(@RequestBody StockRecord stockRecord) {
