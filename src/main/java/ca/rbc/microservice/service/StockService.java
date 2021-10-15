@@ -1,7 +1,9 @@
 package ca.rbc.microservice.service;
 
+import ca.rbc.microservice.controller.RbcFinanceController;
 import ca.rbc.microservice.model.StockRecord;
 import ca.rbc.microservice.repository.RbcStocksRepository;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -12,8 +14,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static org.slf4j.LoggerFactory.getLogger;
+
 @Service
 public class StockService {
+
+    private static final Logger LOGGER = getLogger(StockService.class);
+
 
     @Autowired
     private RbcStocksRepository repo;
@@ -46,7 +53,7 @@ public class StockService {
             reader.readLine();
             String line = null;
             while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+                LOGGER.info("Added Record" + line);
                 String[] stockRecord = line.split(",");
                 stockRecords.add(new StockRecord(stockRecord[0], stockRecord[1], stockRecord[2]));
             }
